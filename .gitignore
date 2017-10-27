@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 rew3-*
 logs
 project/project
@@ -15,3 +16,7 @@ dist
 /.project
 /RUNNING_PID
 /.settings
+=======
+*.class
+*.log
+>>>>>>> f9d5cb2d06d7889e58dec0bbeeb3ae5e4d6aab60
