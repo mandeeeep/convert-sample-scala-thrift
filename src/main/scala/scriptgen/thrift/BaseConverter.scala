@@ -28,7 +28,11 @@ object BaseConverter {
 
   def read(file: String): String = {
     import scala.io.Source
-    Source.fromResource(file).mkString
+    // ((['"])(?:(?!\2|\\).|\\.)*\2)|\/\/[^\n]*|\/\*(?:[^*]|\*(?!\/))*\*\/ REMOVE MULTI AND SINGLE LINE COMMENTS
+    // \/\*([\s\S]*?)\*\/ REMOVE ONLY MULTI LINE COMMENTS
+    val regexCommentRemove = """\/\*([\s\S]*?)\*\/"""
+    val x = Source.fromResource(file).mkString
+    x.replaceAll(regexCommentRemove,"")
   }
 
   def convert(text: String): Seq[Seq[String]] = {
@@ -40,7 +44,7 @@ object BaseConverter {
     for (x <- lines) {
       var temp: Seq[String] = Nil
       if (x.contains("case class")) {
-        temp = temp ++ x.split(",").toSeq
+        temp = temp ++ x.split(",").toSeq.filterNot(x => x.contains("//"))
         grouped = grouped :+ temp
         temp = Nil
       }

@@ -1,9 +1,13 @@
 
+/**
+  * Created by mandeep on 6/13/17.
+  */
 case class Blog(_id: Option[String] = None,
                 title: Option[String] = None,
                 description: Option[String] = None,
-                body: Option[String] = None,
+                //body: Option[String] = None,
                 blogOption: Option[BlogOption] = None,
                 access: Option[AccessType] = None)
 
-case class BlogOption(enableOptions: Boolean = None)
+case class BlogOption(enableOptions: Boolean = None,
+enableDiscussions: Boolean = None)
