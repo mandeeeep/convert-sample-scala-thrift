@@ -4,9 +4,10 @@
   */
 case class Blog(_id: Option[String] = None,
                 title: Option[String] = None,
-                description: Option[String] = None,
+                description: Option[String] = None, // Has taken
                 //body: Option[String] = None,
                 blogOption: Option[BlogOption] = None,
+                comments: Seq[String] = None,
                 access: Option[AccessType] = None)
 
 case class BlogOption(enableOptions: Boolean = None,

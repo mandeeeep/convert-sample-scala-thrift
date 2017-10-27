@@ -23,7 +23,8 @@ object BaseConverter {
 
 
   def init(file: String) = {
-    fieldConversions(convert(read(file)))
+    val output = fieldConversions(convert(read(file)))
+    println(output)
   }
 
   def read(file: String): String = {
@@ -44,7 +45,9 @@ object BaseConverter {
     for (x <- lines) {
       var temp: Seq[String] = Nil
       if (x.contains("case class")) {
-        temp = temp ++ x.split(",").toSeq.filterNot(x => x.contains("//"))
+        val regexRemoveSingleComment = """((['"])(?:(?!\2|\\).|\\.)*\2)|\/\/[^\n]*|\/\*(?:[^*]|\*(?!\/))*\*\/"""
+        val removedSingleComments = x.replaceAll(regexRemoveSingleComment,"")
+        temp = temp ++ removedSingleComments.split(",").toSeq.filterNot(o => o.trim().contains("\n"))
         grouped = grouped :+ temp
         temp = Nil
       }
@@ -52,7 +55,7 @@ object BaseConverter {
     grouped
   }
 
-  def fieldConversions(grouped: Seq[Seq[String]]) = {
+  def fieldConversions(grouped: Seq[Seq[String]]): String = {
     var aClass: Seq[String] = Nil
     for (x <- grouped) {
       var counterY: Int = 0
@@ -84,7 +87,7 @@ object BaseConverter {
         }
       }
     }
-    println(aClass.mkString("\n"))
+    (aClass.mkString("\n"))
   }
 
   def checkHead(str: String): (String, Boolean, String) = {
