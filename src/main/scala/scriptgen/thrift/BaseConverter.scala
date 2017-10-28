@@ -68,7 +68,7 @@ object BaseConverter {
           aClass = aClass :+ "struct " + head + APPEND_SCHEMA_POSTFIX + "{"
           if (isOnlyHead == false) {
             //Here if, HEAD HAS FIELD as well
-            val fieldInfos = retrieveFieldInfo(fieldInHead)
+            val fieldInfos = retrieveFieldInfo(fieldInHead.trim)
             aClass = aClass :+ counterY + ":" + fieldInfos._2 + " " + fieldInfos._1 + ","
             counterY = counterY + 1
           } else {
@@ -94,7 +94,7 @@ object BaseConverter {
     val trimmedStr = str.trim
     val whereTheNameEnds = trimmedStr.indexOf("(")
     val theName = trimmedStr.substring(10, whereTheNameEnds).trim
-    val head = trimmedStr.substring(whereTheNameEnds + 1, trimmedStr.length - 1).trim
+    val head = trimmedStr.substring(whereTheNameEnds + 1, trimmedStr.length).trim
     if (head.length > 0) {
       //HEAD has classname as well as first field
       (theName, false, head)
